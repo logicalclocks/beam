@@ -36,10 +36,11 @@ from apache_beam.io.filesystem import FileMetadata
 from apache_beam.io.filesystem import FileSystem
 from apache_beam.options.pipeline_options import HadoopFileSystemOptions
 from apache_beam.options.pipeline_options import PipelineOptions
-
+from hops import hdfs
 __all__ = ['HadoopFileSystem']
 
-_HDFS_PREFIX = 'hdfs:/'
+# _HDFS_PREFIX = 'hdfs:/'
+_HDFS_PREFIX = 'hdfs://10.0.2.15:8020'
 _URL_RE = re.compile(r'^' + _HDFS_PREFIX + r'(/.*)')
 _COPY_BUFFER_SIZE = 2 ** 16
 _DEFAULT_BUFFER_SIZE = 20 * 1024 * 1024
@@ -107,8 +108,10 @@ class HadoopFileSystem(FileSystem):
     super(HadoopFileSystem, self).__init__(pipeline_options)
     logging.getLogger('hdfs.client').setLevel(logging.WARN)
     if pipeline_options is None:
-      raise ValueError('pipeline_options is not set')
-    if isinstance(pipeline_options, PipelineOptions):
+      hdfs_host = '10.0.2.15'
+      hdfs_port = '50070'
+      hdfs_user = hops.project_user()
+    elif isinstance(pipeline_options, PipelineOptions):
       hdfs_options = pipeline_options.view_as(HadoopFileSystemOptions)
       hdfs_host = hdfs_options.hdfs_host
       hdfs_port = hdfs_options.hdfs_port
