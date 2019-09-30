@@ -34,7 +34,7 @@ public interface FlinkPipelineOptions
     extends PipelineOptions, ApplicationNameOptions, StreamingOptions {
 
   String AUTO = "[auto]";
-  String PIPELINED = "PIPELINED";
+  String PIPELINED = "BATCH_FORCED";
   String EXACTLY_ONCE = "EXACTLY_ONCE";
 
   /**
