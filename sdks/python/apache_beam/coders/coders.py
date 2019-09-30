@@ -608,7 +608,7 @@ class PickleCoder(_PickleCoderBase):
       return coder_impl.CallbackCoderImpl(
         lambda x: dumps(x, HIGHEST_PROTOCOL), pickle.loads)
 
-def as_deterministic_coder(self, step_label, error_message=None):
+  def as_deterministic_coder(self, step_label, error_message=None):
     return DeterministicFastPrimitivesCoder(self, step_label)
 
   def to_type_hint(self):
