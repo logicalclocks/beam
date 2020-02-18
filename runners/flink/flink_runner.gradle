@@ -152,6 +152,11 @@ dependencies {
   compile "org.apache.flink:flink-runtime_2.11:$flink_version"
   compile "org.apache.flink:flink-streaming-java_2.11:$flink_version"
   testCompile project(path: ":sdks:java:core", configuration: "shadowTest")
+  compile project(path: ":sdks:java:io:hadoop-file-system")
+  //shadow "org.apache.beam:beam-sdks-java-io-hadoop-file-system:$project.version"
+  compile "io.hops:hadoop-common:2.8.2.9"
+  compile "io.hops:hadoop-hdfs:2.8.2.9"
+  compile "io.hops:hadoop-client:2.8.2.9"
   // FlinkStateInternalsTest extends abstract StateInternalsTest
   testCompile project(path: ":runners:core-java", configuration: "testRuntime")
   testCompile library.java.hamcrest_core

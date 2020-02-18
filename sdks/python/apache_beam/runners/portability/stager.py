@@ -155,6 +155,7 @@ class Stager(object):
     if staging_location is None:
       raise RuntimeError('The staging_location must be specified.')
 
+    setup_options.requirements_file = None #Hops does not need requirements file
     # Stage a requirements file if present.
     if setup_options.requirements_file is not None:
       if not os.path.isfile(setup_options.requirements_file):

@@ -40,7 +40,13 @@ from typing import TypeVar
 from typing import overload
 
 import google.protobuf.wrappers_pb2
-from future.moves import pickle
+
+# For running Beam with Airflow
+try:
+ from pyspark import cloudpickle as pickle
+except:
+  from future.moves import pickle
+
 from past.builtins import unicode
 
 from apache_beam.coders import coder_impl
@@ -690,8 +696,16 @@ class PickleCoder(_PickleCoderBase):
 
   def _create_impl(self):
     dumps = pickle.dumps
-    HIGHEST_PROTOCOL = pickle.HIGHEST_PROTOCOL
-    return coder_impl.CallbackCoderImpl(
+    HIGHEST_PROTOCOL = None
+    try:
+      HIGHEST_PROTOCOL = pickle.HIGHEST_PROTOCOL
+    except:
+      pass
+    if HIGHEST_PROTOCOL is None:
+      return coder_impl.CallbackCoderImpl(
+        lambda x: dumps(x), pickle.loads)
+    else:
+      return coder_impl.CallbackCoderImpl(
         lambda x: dumps(x, HIGHEST_PROTOCOL), pickle.loads)
 
   def as_deterministic_coder(self, step_label, error_message=None):
