@@ -108,7 +108,7 @@ def get_tls_webhdfs_client():
   hopstls.get_client_key_location()
   return TLSClient('https://%s:%s' % (hostname, str(hdfs_port)),
                    user=hdfs_user,
-                   verify=cwd+"/ca_chain.pem",
+                   # verify=cwd+"/ca_chain.pem",
                    cert=(cwd+"/client.pem",
                          cwd+"/client_key.pem"))
 
